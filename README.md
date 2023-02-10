@@ -5,7 +5,7 @@ directory structure:
 
 `src/api/` - api sourcecode
 
-`src/utils/` - helpers to get news data
+`src/utils/` - helpers to get and process news data
 
 `src/types.ts` - all types needed for NewsFeed model 
 

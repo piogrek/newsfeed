@@ -9,7 +9,7 @@ export function checkNewsTickers(news: NewsItem[], logger: any) {
     })
 }
 
-export function getUniqueTickers(news: NewsItem[], logger: any): (string | number)[][] {
+export function getUniqueTickers(news: NewsItem[]): (string | number)[][] {
     let tickers: Tickers = {}
 
     news.map(news => {
@@ -35,11 +35,11 @@ export function getUniqueTickers(news: NewsItem[], logger: any): (string | numbe
     });
 }
 
-export function getCategoriesWithTickers(news: NewsItem[], logger: any): CategoryStats {
+export function getCategoriesWithTickers(news: NewsItem[]): CategoryStats {
     let categories: Categories = {}
 
     news.map(news => {
-        const regex = /.*\/smw-category\/([a-z]+).*/g;
+        const regex = /^\<.*\"\>(.+)\<.*/g;
         const categoryMatch = news["smw category"].matchAll(regex);
         const result = categoryMatch.next()
         // get only category name from link tag
@@ -51,7 +51,7 @@ export function getCategoriesWithTickers(news: NewsItem[], logger: any): Categor
                 // init category key
                 categories[category] = { tickers: 0, noTickers: 0, count: 0 }
             }
-
+            
             if (news.ticker) {
                 categories[category].tickers++
             } else {
@@ -59,7 +59,6 @@ export function getCategoriesWithTickers(news: NewsItem[], logger: any): Categor
             }
             //popularity
             categories[category].count++
-
         }
     })
 
@@ -71,7 +70,7 @@ export function getCategoriesWithTickers(news: NewsItem[], logger: any): Categor
 
     // sort descending by number of tickers
     // first filter out any with tickers, then sort by popularity
-    const noTickerByCategory = sortable.filter(a => a[2] === 0).sort((a, b) => a[2] - b[2]);
+    const noTickerByCategory = sortable.filter(a => a[2] > 0 && a[2] === a[1]).sort((a, b) => a[2] - b[2]);
     // sort descending by popularity, then descending by number of no-tickers
     const byCategorySomeNoTicker = sortable.filter(a => a[2] > 0).sort((a, b) => b[1] - a[1] || b[2] - a[2]);
     const byPopularity = sortable.sort((a, b) => b[1] - a[1]);

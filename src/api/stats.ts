@@ -9,10 +9,9 @@ const NewsFeedStatsHandler = (logger: any) => async (req: Request, res: Response
 
   const news = await GetNewsFeed();
   checkNewsTickers(news, logger)
-  const tickers = getUniqueTickers(news, logger)
-  const categories = getCategoriesWithTickers(news, logger)
+  const tickers = getUniqueTickers(news)
+  const categories = getCategoriesWithTickers(news)
 
-  // console.log(news)
   // most popoular category
   const mostPopular = categories.byPopularity.length ? categories.byPopularity[0] : ["not found", 0, 0]
   // most popular category without a ticker

@@ -3,7 +3,7 @@ export type NewsItem = {
     body: string
     "post date": string
     "smw category": string
-    ticker: string
+    ticker: string | null
     type: string
 }
 

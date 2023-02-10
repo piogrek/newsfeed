@@ -24,8 +24,8 @@ START
 to start project:
 ```
 npm start
-curl http://localhost:3001
 ```
+then inspect api eg. `curl http://localhost:3001`
 
 TODO
 ------
